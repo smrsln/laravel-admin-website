@@ -1,0 +1,45 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+
+class Etkinlik extends Model
+{
+    protected $table = 'etkinlik';
+	protected $fillable = [
+        'gorsel', 'baslik', 'yazi',
+    ];
+
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
+
+    use Sluggable;
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'baslik'
+            ]
+        ];
+    }
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+}
